@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexaBridge Solutions | Customer Support BPO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:   #0A0F2C;
+      --blue:   #1A3A8F;
+      --accent: #00C2FF;
+      --gold:   #F5A623;
+      --light:  #F0F4FF;
+      --white:  #FFFFFF;
+      --text:   #1C1C2E;
+      --muted:  #6B7280;
+      --card-bg:#FFFFFF;
+      --grad: linear-gradient(135deg, #0A0F2C 0%, #1A3A8F 60%, #00C2FF 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(10,15,44,0.95); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%; border-bottom: 1px solid rgba(0,194,255,0.15);
+      transition: padding 0.3s;
+    }
+    nav.scrolled { padding: 12px 6%; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 38px; height: 38px; background: var(--grad);
+      border-radius: 10px; display: grid; place-items: center; font-size: 18px;
+    }
+    .logo-text { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--white); }
+    .logo-text span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent); color: var(--navy); padding: 10px 24px;
+      border-radius: 50px; font-weight: 700; font-size: 0.875rem;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,194,255,0.4); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); transition: 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; background: var(--grad);
+      display: flex; align-items: center; position: relative; overflow: hidden;
+      padding: 120px 6% 80px;
+    }
+    .hero-bg-img {
+      position: absolute; inset: 0; z-index: 0;
+      background: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80') center/cover no-repeat;
+      opacity: 0.12;
+    }
+    .hero-particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,194,255,0.15); border: 1px solid rgba(0,194,255,0.4);
+      color: var(--accent); padding: 8px 18px; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .hero-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800; color: var(--white); line-height: 1.1; margin-bottom: 20px;
+    }
+    .hero-title .highlight { color: var(--accent); display: block; }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 36px; max-width: 520px; }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: var(--navy); padding: 14px 32px;
+      border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,194,255,0.5); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.5); color: var(--white); padding: 14px 32px;
+      border-radius: 50px; font-weight: 600; font-size: 0.95rem;
+      text-decoration: none; transition: 0.3s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+    .hero-stats {
+      position: absolute; right: 6%; bottom: 80px; z-index: 1;
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 16px;
+      padding: 20px 24px; text-align: center; min-width: 110px;
+    }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 4px; }
+    .hero-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1; }
+    .hero-scroll a { color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 2px; text-decoration: none; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent); animation: scrollDown 1.8s infinite; }
+    @keyframes scrollDown { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+    /* ── SECTION BASE ── */
+    section { padding: 90px 6%; }
+    .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--navy); line-height: 1.2; }
+    .section-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.7; margin-top: 14px; max-width: 580px; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--light); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 50px; }
+    .about-img-wrap { position: relative; border-radius: 24px; overflow: hidden; }
+    .about-img-wrap img { width: 100%; height: 420px; object-fit: cover; display: block; border-radius: 24px; }
+    .about-badge-float {
+      position: absolute; bottom: 24px; left: 24px;
+      background: var(--white); border-radius: 16px; padding: 16px 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .about-badge-icon { width: 44px; height: 44px; background: var(--grad); border-radius: 12px; display: grid; place-items: center; font-size: 20px; }
+    .about-badge-text { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    .about-badge-sub { font-size: 0.78rem; color: var(--muted); }
+    .about-values { margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .value-item { display: flex; align-items: center; gap: 14px; }
+    .value-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+    .value-text { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+
+    /* ── WHY CHOOSE US ── */
+    #why { background: var(--white); }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; margin-top: 50px; }
+    .why-card {
+      background: var(--white); border: 1px solid #E8EEFF; border-radius: 20px;
+      padding: 32px 28px; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .why-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--grad); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .why-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,58,143,0.12); border-color: rgba(0,194,255,0.3); }
+    .why-card:hover::before { transform: scaleX(1); }
+    .why-icon { font-size: 2.2rem; margin-bottom: 18px; }
+    .why-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .why-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--navy); }
+    #services .section-label { color: var(--accent); }
+    #services .section-title { color: var(--white); }
+    #services .section-sub { color: rgba(255,255,255,0.6); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px; margin-top: 50px; }
+    .service-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px; padding: 36px 28px; transition: 0.35s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(0,194,255,0.15), transparent 70%);
+      border-radius: 50%; transform: translate(30px,30px);
+    }
+    .service-card:hover { background: rgba(0,194,255,0.07); border-color: rgba(0,194,255,0.35); transform: translateY(-5px); }
+    .service-num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: rgba(0,194,255,0.15); line-height: 1; margin-bottom: 16px; }
+    .service-icon { font-size: 2rem; margin-bottom: 14px; }
+    .service-card h3 { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .service-card p { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.65; }
+
+    /* ── VISION ── */
+    #vision { background: var(--light); }
+    .vision-img-row { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: center; margin-top: 50px; }
+    .vision-img-wrap { border-radius: 24px; overflow: hidden; }
+    .vision-img-wrap img { width: 100%; height: 400px; object-fit: cover; display: block; }
+    .vision-points { display: flex; flex-direction: column; gap: 24px; }
+    .vision-point {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: var(--white); border-radius: 16px; padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s;
+    }
+    .vision-point:hover { transform: translateX(6px); }
+    .vision-point-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .vision-point h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .vision-point p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── CTA BAND ── */
+    #cta {
+      background: var(--grad); text-align: center; padding: 80px 6%;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80') center/cover no-repeat;
+      opacity: 0.08;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    #cta h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 800; color: var(--white); margin-bottom: 16px; }
+    #cta p { font-size: 1.05rem; color: rgba(255,255,255,0.75); margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .cta-phone { font-size: 1.1rem; font-weight: 700; color: var(--white); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; }
+    .cta-phone:hover { color: var(--accent); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; }
+    .contact-card {
+      display: flex; align-items: center; gap: 18px;
+      background: var(--light); border-radius: 16px; padding: 22px 24px;
+    }
+    .contact-card-icon { font-size: 1.8rem; }
+    .contact-card h4 { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 4px; }
+    .contact-card p { font-size: 0.875rem; color: var(--muted); }
+    .contact-card a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .contact-card a:hover { color: var(--accent); }
+    .contact-img { border-radius: 20px; overflow: hidden; }
+    .contact-img img { width: 100%; height: 100%; object-fit: cover; min-height: 300px; display: block; border-radius: 20px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.6);
+      padding: 50px 6% 30px;
+    }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 40px; }
+    .footer-brand .logo-text { font-size: 1.1rem; color: var(--white); }
+    .footer-brand p { margin-top: 10px; font-size: 0.85rem; max-width: 280px; line-height: 1.6; }
+    .footer-links h5 { color: var(--white); font-weight: 700; margin-bottom: 14px; font-size: 0.9rem; }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; }
+    .footer-bottom .owner { color: rgba(255,255,255,0.7); }
+    .footer-disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.35); max-width: 700px; margin-top: 16px; line-height: 1.55; }
+
+    /* ── ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 5%; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-stats { position: static; margin-top: 40px; justify-content: center; }
+      .about-grid, .vision-img-row, .contact-grid { grid-template-columns: 1fr; }
+      .hero-content { max-width: 100%; }
+      .footer-top { flex-direction: column; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="logo">
+    <div class="logo-icon">🌐</div>
+    <span class="logo-text">Nexa<span>Bridge</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:+16472540819" class="nav-cta">📞 Call Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-img"></div>
+  <canvas class="hero-particles" id="particleCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Live 24/7 Support Available</div>
+    <h1 class="hero-title">
+      Your Trusted
+      <span class="highlight">Customer Support</span>
+      Partner
+    </h1>
+    <p class="hero-sub">Quick and reliable help with your Phone &amp; Internet bill. NexaBridge Solutions delivers world-class BPO services built on integrity, speed, and care.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">🚀 Our Services</a>
+      <a href="#contact" class="btn-outline">📬 Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num">24/7</div><div class="stat-label">Support</div></div>
+    <div class="stat-card"><div class="stat-num">98%</div><div class="stat-label">Satisfaction</div></div>
+    <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Clients Served</div></div>
+  </div>
+  <div class="hero-scroll">
+    <a href="#about"><div class="scroll-line"></div>Scroll</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who We Are</div>
+  <h2 class="section-title">About NexaBridge Solutions</h2>
+  <p class="section-sub">Integrity, transparency, and excellence guide everything we do. We strive to create a collaborative environment where innovation flourishes and our clients receive the highest quality service.</p>
+  <div class="about-grid reveal">
+    <div class="about-img-wrap">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="Team at work" loading="lazy"/>
+      <div class="about-badge-float">
+        <div class="about-badge-icon">🏆</div>
+        <div>
+          <div class="about-badge-text">Award-Winning BPO</div>
+          <div class="about-badge-sub">Trusted by 500+ businesses</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Our Foundation</div>
+      <h3 class="section-title" style="font-size:1.9rem;">Built on Trust &amp; Excellence</h3>
+      <p class="section-sub">NexaBridge Solutions is a premier Business Process Outsourcing firm specializing in phone and internet billing support. We are committed to delivering seamless, reliable, and human-centred customer experiences.</p>
+      <div class="about-values">
+        <div class="value-item"><div class="value-dot"></div><span class="value-text">Integrity in every interaction — no hidden agendas</span></div>
+        <div class="value-item"><div class="value-dot"></div><span class="value-text">Transparency across all processes and reporting</span></div>
+        <div class="value-item"><div class="value-dot"></div><span class="value-text">Excellence as a standard, not an exception</span></div>
+        <div class="value-item"><div class="value-dot"></div><span class="value-text">Innovation that drives measurable client growth</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="section-label">Why NexaBridge</div>
+  <h2 class="section-title">Why Choose Us</h2>
+  <p class="section-sub">We combine deep industry knowledge with cutting-edge technology to deliver results you can measure.</p>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">🏭</div>
+      <h3>Industry Expertise</h3>
+      <p>With extensive experience in the BPO sector, we understand the evolving demands of internet services and deliver solutions that follow industry best practices.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📈</div>
+      <h3>Scalable Solutions</h3>
+      <p>From startups to established enterprises, our solutions scale with your business, adapting to growth and market changes seamlessly.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">⚙️</div>
+      <h3>Technology Integration</h3>
+      <p>We leverage advanced technologies and robust infrastructure to streamline processes, improve efficiency, and reduce operational costs.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🤝</div>
+      <h3>Customer-Centric Approach</h3>
+      <p>Our focus is on building strong customer relationships, ensuring every interaction reflects your brand values and fosters long-term loyalty.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-sub">End-to-end BPO solutions tailored for the internet and telecommunications industry.</p>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon">🎧</div>
+      <h3>Customer Support</h3>
+      <p>Our team is available 24/7 to help with questions and technical problems. We focus on fast solutions and friendly support that keeps your customers happy.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-icon">🔧</div>
+      <h3>Technical Assistance</h3>
+      <p>We help with troubleshooting and expert advice for internet service issues. Our team is ready to solve a wide range of technical challenges efficiently.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-icon">💼</div>
+      <h3>Sales Support</h3>
+      <p>We help improve sales by finding new leads, increasing conversions, and keeping customers happy in a competitive and fast-moving market.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-icon">🗂️</div>
+      <h3>Back Office Solutions</h3>
+      <p>We handle tasks like data entry, order processing, and billing — so you can focus on running your core business smoothly and efficiently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="section-label">Our Vision</div>
+  <h2 class="section-title">Where We're Headed</h2>
+  <p class="section-sub">We strive to support businesses in the internet services industry by delivering high-quality BPO customer service that is smoother, faster, and more reliable.</p>
+  <div class="vision-img-row">
+    <div class="vision-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80" alt="Team vision meeting" loading="lazy"/>
+    </div>
+    <div class="vision-points">
+      <div class="vision-point reveal">
+        <div class="vision-point-icon">😊</div>
+        <div>
+          <h4>Better Customer Experiences</h4>
+          <p>We provide friendly and helpful support to ensure every customer interaction is positive, efficient, and leaves a lasting impression.</p>
+        </div>
+      </div>
+      <div class="vision-point reveal">
+        <div class="vision-point-icon">⚡</div>
+        <div>
+          <h4>Efficient Processes</h4>
+          <p>By using modern technology and smart workflows, we help businesses save time and operate far more effectively than before.</p>
+        </div>
+      </div>
+      <div class="vision-point reveal">
+        <div class="vision-point-icon">🤲</div>
+        <div>
+          <h4>Strong Partnerships</h4>
+          <p>We build lasting relationships with our clients based on trust, reliability, and genuine teamwork — not just contracts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section id="cta">
+  <div class="cta-inner">
+    <h2>Ready to Elevate Your Customer Support?</h2>
+    <p>Join hundreds of businesses who trust NexaBridge Solutions to handle their customers with care and precision.</p>
+    <div class="cta-btns">
+      <a href="#contact" class="btn-primary">Get Started Today →</a>
+      <a href="tel:+16472540819" class="btn-outline">📞 Call Our Team</a>
+    </div>
+    <br/>
+    <a href="tel:+16472540819" class="cta-phone">📱 Customer Support Team — Available 24/7</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Reach Us</div>
+  <h2 class="section-title">Contact NexaBridge</h2>
+  <p class="section-sub">Have a question about your phone or internet bill? Our team is always ready to help.</p>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="contact-card">
+        <div class="contact-card-icon">📞</div>
+        <div>
+          <h4>Phone</h4>
+          <p><a href="tel:+16472540819">+1 (647) 254-0819</a></p>
+          <p style="font-size:0.78rem;margin-top:2px;">Mon–Sun, 24/7</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <div>
+          <h4>Email</h4>
+            <li><a href="mailto:waitesallen4@gmail.com">✉️ waitesallen4@gmail.com</a></li>
+         <li><a href="info@nexabridgesolution.online">✉️ info@nexabridgesolution.online</a></li>
+          <p style="font-size:0.78rem;margin-top:2px;">We respond within 1 hour</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🌐</div>
+        <div>
+          <h4>Website Owner</h4>
+          <p style="color:#1C1C2E;font-weight:600;">Rizwana Saleem</p>
+          <p style="font-size:0.78rem;margin-top:2px;">NexaBridge Solutions</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">⏰</div>
+        <div>
+          <h4>Support Hours</h4>
+          <p style="font-weight:600;color:var(--navy);">24 Hours / 7 Days</p>
+          <p style="font-size:0.78rem;margin-top:2px;">Including holidays</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-img reveal">
+      <img src="https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=800&q=80" alt="Customer support team" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo" style="margin-bottom:10px;">
+        <div class="logo-icon">🌐</div>
+        <span class="logo-text" style="font-size:1.1rem;">Nexa<span>Bridge</span></span>
+      </div>
+      <p>Your trusted BPO partner for phone &amp; internet customer support. Owned and operated by Rizwana Saleem.</p>
+    </div>
+    <div class="footer-links">
+      <h5>Navigation</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#vision">Our Vision</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Customer Support</a></li>
+        <li><a href="#services">Technical Assistance</a></li>
+        <li><a href="#services">Sales Support</a></li>
+        <li><a href="#services">Back Office Solutions</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:+16472540819">📞 +1 (647) 254-0819</a></li>
+        <li><a href="mailto:waitesallen4@gmail.com">✉️ waitesallen4@gmail.com</a></li>
+         <li><a href="info@nexabridgesolution.online">✉️ info@nexabridgesolution.online</a></li>
+        <li><span style="color:rgba(255,255,255,.55);font-size:.85rem;">🌍 Available 24/7</span></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="footer-divider"/>
+  <div class="footer-bottom">
+    <span>© 2025 NexaBridge Solutions. All rights reserved.</span>
+    <span class="owner">Owned by <strong style="color:#fff;">Rizwana Saleem</strong> | Customer Support Team</span>
+  </div>
+  <p class="footer-disclaimer">
+    This website belongs to an authorized marketing partner of the project. The company reserves the right to add, alter, or delete any material from the website at any time. We are not mimicking any other site. We are an official sales partner.
+  </p>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Hamburger toggle (mobile)
+  function toggleMenu() {
+    const nav = document.querySelector('.nav-links');
+    const cta = document.querySelector('.nav-cta');
+    const isOpen = nav.style.display === 'flex';
+    if (isOpen) {
+      nav.style.display = ''; cta.style.display = '';
+    } else {
+      nav.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;width:100%;background:rgba(10,15,44,0.97);padding:24px;gap:20px;z-index:999;';
+      cta.style.cssText = 'display:block;position:fixed;top:64px;left:0;width:100%;text-align:center;padding:16px;z-index:998;margin-top:200px;';
+    }
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Particle canvas
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      r: Math.random() * 2 + 0.5,
+      dx: (Math.random() - 0.5) * 0.4, dy: (Math.random() - 0.5) * 0.4,
+      alpha: Math.random() * 0.5 + 0.1
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,194,255,${p.alpha})`; ctx.fill();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+</script>
+</body>
+</html>
